@@ -39,7 +39,7 @@
             [sender setTitle:(NSString *)card.contents forState:UIControlStateSelected];
         }else {
             [sender setTitle:@"X" forState:UIControlStateSelected];
-            self.flipsLabel.text =@"Deck is empty ";
+            self.flipsLabel.text =@"Deck is empty";
         }
     }
     sender.selected = !sender.selected;
