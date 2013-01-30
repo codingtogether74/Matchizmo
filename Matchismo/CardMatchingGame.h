@@ -19,5 +19,6 @@
 - (Card *)cardAtIndex:(NSInteger)index;
 
 @property (readonly,nonatomic) int score;
+@property (readonly,nonatomic) NSString *resultOfFlip;
 
 @end

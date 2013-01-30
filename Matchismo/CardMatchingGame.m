@@ -12,6 +12,7 @@
 
 @property (readwrite, nonatomic) int score;
 @property (strong,nonatomic) NSMutableArray *cards; // of Card
+@property (readwrite,nonatomic) NSString *resultOfFlip;
 
 @end
 
@@ -23,15 +24,24 @@
         return _cards;
 }
 
+- (NSString *)resultOfFlip
+{
+    if (!_resultOfFlip) _resultOfFlip =@"";
+    return _resultOfFlip;
+}
+
 #define MATCH_BONUS 4
 #define MISMATCH_PENALTY 2
 #define FLIP_COST  1
 
 - (void)flipCardAtIndex:(NSInteger)index
 {
+    self.resultOfFlip = @"";
     Card *card = [self cardAtIndex: index];
     if (card && !card.isUnplayable) {
+        self.resultOfFlip =[NSString stringWithFormat:@"Flipped down"];        
         if (!card.isFaceUp) {
+         self.resultOfFlip =[NSString stringWithFormat:@"Flipped up %@! %d point minus ",card.contents,FLIP_COST];
          for (Card *otherCard in self.cards) {
             if (otherCard.isFaceUp && !otherCard.isUnplayable) {
                 int matchScore = [card match:@[otherCard]];
@@ -39,10 +49,12 @@
                     card.Unplayable =YES;
                     otherCard.Unplayable = YES;
                     self.score =matchScore*MATCH_BONUS;
+                    self.resultOfFlip =[NSString stringWithFormat:@"Matched %@&%@ for %d points ",card.contents,otherCard.contents,MATCH_BONUS];
                     
                 }else {
                     otherCard.faceUp =NO;
                     self.score -= MISMATCH_PENALTY;
+                    self.resultOfFlip =[NSString stringWithFormat:@"%@&%@ don't match! %d point penalty ",card.contents,otherCard.contents,MISMATCH_PENALTY];
                 }
                 break;
             }
