@@ -22,6 +22,7 @@
 		E44CC7AD16B8FC3500FE543D /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = E44CC7A716B8FC3500FE543D /* Deck.m */; };
 		E44CC7AE16B8FC3500FE543D /* PlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E44CC7A916B8FC3500FE543D /* PlayingCard.m */; };
 		E44CC7AF16B8FC3500FE543D /* PlayingCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = E44CC7AB16B8FC3500FE543D /* PlayingCardDeck.m */; };
+		E44CC7B316B93F4F00FE543D /* CardMatchingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = E44CC7B216B93F4F00FE543D /* CardMatchingGame.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,8 @@
 		E44CC7A916B8FC3500FE543D /* PlayingCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCard.m; path = Model/PlayingCard.m; sourceTree = "<group>"; };
 		E44CC7AA16B8FC3500FE543D /* PlayingCardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayingCardDeck.h; path = Model/PlayingCardDeck.h; sourceTree = "<group>"; };
 		E44CC7AB16B8FC3500FE543D /* PlayingCardDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayingCardDeck.m; path = Model/PlayingCardDeck.m; sourceTree = "<group>"; };
+		E44CC7B116B93F4F00FE543D /* CardMatchingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardMatchingGame.h; sourceTree = "<group>"; };
+		E44CC7B216B93F4F00FE543D /* CardMatchingGame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardMatchingGame.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +126,8 @@
 		E44CC7B016B8FC3F00FE543D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E44CC7B116B93F4F00FE543D /* CardMatchingGame.h */,
+				E44CC7B216B93F4F00FE543D /* CardMatchingGame.m */,
 				E44CC7A416B8FC3500FE543D /* Card.h */,
 				E44CC7A516B8FC3500FE543D /* Card.m */,
 				E44CC7A616B8FC3500FE543D /* Deck.h */,
@@ -209,6 +214,7 @@
 				E44CC7AD16B8FC3500FE543D /* Deck.m in Sources */,
 				E44CC7AE16B8FC3500FE543D /* PlayingCard.m in Sources */,
 				E44CC7AF16B8FC3500FE543D /* PlayingCardDeck.m in Sources */,
+				E44CC7B316B93F4F00FE543D /* CardMatchingGame.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
