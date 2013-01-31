@@ -22,6 +22,17 @@
             score =4;
         }
     }
+    if ([otherCards count] >1) {
+        score =1;
+        for (PlayingCard *otherCard in otherCards) {
+            if ([otherCard.suit isEqualToString:self.suit]) {
+                score = score*2;
+            } else if (otherCard.rank == self.rank){
+                score =score*4;
+            } else score =score*1;
+        }
+        if (score == 1) score =0;
+    }
     return score;
 }
 

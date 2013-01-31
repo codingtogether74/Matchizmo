@@ -45,10 +45,14 @@
 }
 -(void)updateUI
 {
+    UIImage *cardBackImage = [UIImage imageNamed:@"back-blue-75-1.png"];
     for (UIButton *cardButton  in self.cardButtons) {
         Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
         [cardButton setTitle:card.contents forState:UIControlStateSelected];
         [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
+        if (!card.isFaceUp)[cardButton setImage:cardBackImage forState:UIControlStateNormal];
+        if (card.isFaceUp)[cardButton setImage:nil forState:UIControlStateNormal];
+        cardButton.imageEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3);
         cardButton.selected = card.faceUp;
         cardButton.enabled = !card.isUnplayable;
         cardButton.alpha = (card.isUnplayable ? 0.3 : 1.0);
@@ -66,6 +70,7 @@
 
 - (IBAction)flipCard:(UIButton *)sender
 {
+    self.modeChanged.enabled =NO;
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
     self.flipCount++;
     [self updateUI];
@@ -74,6 +79,7 @@
 - (IBAction)pressDeal:(id)sender
 {
     self.game =nil;
+    self.modeChanged.enabled =YES;
     [self updateUI];
 }
 - (IBAction)modeChanged:(UISegmentedControl *)sender
@@ -81,12 +87,18 @@
     switch (sender.selectedSegmentIndex) {
         case 0:
             self.numberMatchedCards=2;
+            self.game =nil;
+            [self updateUI];
             break;
         case 1:
             self.numberMatchedCards=3;
+            self.game =nil;
+            [self updateUI];
             break;
         default:
             self.numberMatchedCards=2;
+            self.game =nil;
+            [self updateUI];
             break;
     }
 }
