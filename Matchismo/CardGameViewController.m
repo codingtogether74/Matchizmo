@@ -23,6 +23,8 @@
 @property (nonatomic) int gameLevel;
 @property (weak, nonatomic) IBOutlet UISlider *timeSlider;
 @property (nonatomic, strong) NSMutableArray *flipsHistory;
+@property (nonatomic) float sliderValue;
+
 
 @end
 
@@ -57,14 +59,14 @@
 
 -(void)updateUI
 {
-    UIImage *cardBackImage = [UIImage imageNamed:@"back-blue-75-1.png"];
+    UIImage *cardBackImage = [UIImage imageNamed:@"Lotus.jpg"];
     for (UIButton *cardButton  in self.cardButtons) {
         Card *card = [self.game cardAtIndex:[self.cardButtons indexOfObject:cardButton]];
         [cardButton setTitle:card.contents forState:UIControlStateSelected];
         [cardButton setTitle:card.contents forState:UIControlStateSelected|UIControlStateDisabled];
         if (!card.isFaceUp){
             [cardButton setImage:cardBackImage forState:UIControlStateNormal];
-            cardButton.imageEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3);
+            cardButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
         } else {
             [cardButton setImage:nil forState:UIControlStateNormal];
         }
@@ -76,7 +78,8 @@
     self.resultOfFlip.text = [NSString stringWithFormat:@"%@", self.game.resultOfFlip];
     
     [self.timeSlider setMinimumValue:0.0f];
-    [self.timeSlider setMaximumValue:(float) self.flipCount];
+    [self.timeSlider setMaximumValue:50.0f];
+    [self.timeSlider setValue: self.sliderValue animated:YES];
     
 }
 
@@ -92,20 +95,19 @@
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
     self.flipCount++;
     [self.flipsHistory addObject:self.game.resultOfFlip];
+    self.sliderValue++;
     [self updateUI];
-    [self.timeSlider setValue: self.flipCount animated:NO];
+
 
     
 }
 - (IBAction)pressDeal:(id)sender
 {
-    self.game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
-                                                  usingDeck:[[PlayingCardDeck alloc]init]
-                                               andGameLevel:self.gameLevel];
-
+    self.game = nil;
     self.modeChanged.enabled =YES;
     self.flipCount =0;
     self.flipsHistory = nil;
+    self.sliderValue=0;
     [self updateUI];
 }
 - (IBAction)modeChanged:(UISegmentedControl *)sender
@@ -113,20 +115,17 @@
     switch (sender.selectedSegmentIndex) {
         case 0:
             self.gameLevel=2;
-            self.game =nil;
-            [self updateUI];
             break;
         case 1:
             self.gameLevel=3;
-            self.game =nil;
-            [self updateUI];
             break;
         default:
             self.gameLevel=2;
-            self.game =nil;
-            [self updateUI];
             break;
     }
+    self.game =nil;
+    [self updateUI];
+    
 }
 - (IBAction)timeChanged:(UISlider *)sender
 {
@@ -135,12 +134,6 @@
     if (selectedIndex < 0 || (selectedIndex > self.flipCount - 1)) return;
 
     self.resultOfFlip.alpha = (selectedIndex < self.flipCount-1) ? 0.3 : 1.0;
- /*
-    if (selectedIndex < self.flipCount-1)
-        self.resultOfFlip.alpha = 0.3;
-    else
-        self.resultOfFlip.alpha = 1.0;
-   */ 
     self.resultOfFlip.text = [self.flipsHistory objectAtIndex: selectedIndex];
    
 }

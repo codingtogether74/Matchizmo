@@ -82,6 +82,10 @@
 		E44CC82816BB04E500FE543D /* spades-a-75.png in Resources */ = {isa = PBXBuildFile; fileRef = E44CC7ED16BB04E400FE543D /* spades-a-75.png */; };
 		E44CC82916BB04E500FE543D /* spades-j-75.png in Resources */ = {isa = PBXBuildFile; fileRef = E44CC7EE16BB04E500FE543D /* spades-j-75.png */; };
 		E44CC82A16BB04E500FE543D /* spades-k-75.png in Resources */ = {isa = PBXBuildFile; fileRef = E44CC7EF16BB04E500FE543D /* spades-k-75.png */; };
+		E44CC82C16BC431200FE543D /* Eagle & Waterfall.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E44CC82B16BC431100FE543D /* Eagle & Waterfall.jpg */; };
+		E44CC83016BC442300FE543D /* Lion.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E44CC82D16BC442200FE543D /* Lion.jpg */; };
+		E44CC83116BC442300FE543D /* Lotus.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E44CC82E16BC442300FE543D /* Lotus.jpg */; };
+		E44CC83216BC442300FE543D /* Maple.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E44CC82F16BC442300FE543D /* Maple.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -170,6 +174,10 @@
 		E44CC7ED16BB04E400FE543D /* spades-a-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "spades-a-75.png"; path = "75/spades-a-75.png"; sourceTree = "<group>"; };
 		E44CC7EE16BB04E500FE543D /* spades-j-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "spades-j-75.png"; path = "75/spades-j-75.png"; sourceTree = "<group>"; };
 		E44CC7EF16BB04E500FE543D /* spades-k-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "spades-k-75.png"; path = "75/spades-k-75.png"; sourceTree = "<group>"; };
+		E44CC82B16BC431100FE543D /* Eagle & Waterfall.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Eagle & Waterfall.jpg"; path = "75/Eagle & Waterfall.jpg"; sourceTree = "<group>"; };
+		E44CC82D16BC442200FE543D /* Lion.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Lion.jpg; sourceTree = "<group>"; };
+		E44CC82E16BC442300FE543D /* Lotus.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Lotus.jpg; sourceTree = "<group>"; };
+		E44CC82F16BC442300FE543D /* Maple.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Maple.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,6 +270,10 @@
 		E44CC7B416BB04AC00FE543D /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E44CC82D16BC442200FE543D /* Lion.jpg */,
+				E44CC82E16BC442300FE543D /* Lotus.jpg */,
+				E44CC82F16BC442300FE543D /* Maple.jpg */,
+				E44CC82B16BC431100FE543D /* Eagle & Waterfall.jpg */,
 				E44CC7B516BB04E400FE543D /* back-blue-75-1.png */,
 				E44CC7B616BB04E400FE543D /* back-blue-75-2.png */,
 				E44CC7B716BB04E400FE543D /* back-blue-75-3.png */,
@@ -441,6 +453,10 @@
 				E44CC82816BB04E500FE543D /* spades-a-75.png in Resources */,
 				E44CC82916BB04E500FE543D /* spades-j-75.png in Resources */,
 				E44CC82A16BB04E500FE543D /* spades-k-75.png in Resources */,
+				E44CC82C16BC431200FE543D /* Eagle & Waterfall.jpg in Resources */,
+				E44CC83016BC442300FE543D /* Lion.jpg in Resources */,
+				E44CC83116BC442300FE543D /* Lotus.jpg in Resources */,
+				E44CC83216BC442300FE543D /* Maple.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
