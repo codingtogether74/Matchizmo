@@ -13,27 +13,17 @@
 
 -(int)match:(NSArray *)otherCards
 {
-    int score =0;
-    if ([otherCards count] == 1) {
-        PlayingCard *otherCard =[otherCards lastObject ];
-        if ([otherCard.suit isEqualToString:self.suit]) {
-            score = 1;
-        } else if (otherCard.rank == self.rank){
-            score =4;
+    int suitScore = [otherCards count] + 1;
+    int rankScore = ([otherCards count] + 1) * 2;
+    for (PlayingCard *otherCard in otherCards) {
+        if (otherCard.rank != self.rank) {
+            rankScore = 0;
+        }
+        if (![otherCard.suit isEqualToString:self.suit]) {
+            suitScore = 0;
         }
     }
-    if ([otherCards count] >1) {
-        score =1;
-        for (PlayingCard *otherCard in otherCards) {
-            if ([otherCard.suit isEqualToString:self.suit]) {
-                score = score*2;
-            } else if (otherCard.rank == self.rank){
-                score =score*4;
-            } else score =score*1;
-        }
-        if (score == 1) score =0;
-    }
-    return score;
+    return rankScore + suitScore;
 }
 
 - (NSString *)contents

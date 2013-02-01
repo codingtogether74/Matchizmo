@@ -13,9 +13,8 @@
 @property (readwrite, nonatomic) int score;
 @property (strong,nonatomic) NSMutableArray *cards; // of Card
 @property (readwrite,nonatomic) NSString *resultOfFlip;
-@property (nonatomic) int numberMatchedCards;
-@property (strong,nonatomic) NSMutableArray *matchedCards; // of otherCard
-@property (strong,nonatomic) NSMutableArray *contentsOfMatchedCards;  // of contents of matchedCards
+@property (nonatomic) int gameLevel;
+@property (strong,nonatomic) NSMutableArray *faceUpCards; // of otherCard
 
 @end
 
@@ -27,17 +26,12 @@
         return _cards;
 }
 
-- (NSMutableArray *)matchedCards
+- (NSMutableArray *)faceUpCards
 {
-    if (!_matchedCards) _matchedCards =[[NSMutableArray alloc] init];
-    return _matchedCards;
+    if (!_faceUpCards) _faceUpCards =[[NSMutableArray alloc] init];
+    return _faceUpCards;
 }
 
-- (NSMutableArray *)contentsOfMatchedCards
-{
-    if (!_contentsOfMatchedCards) _contentsOfMatchedCards =[[NSMutableArray alloc] init];
-    return _contentsOfMatchedCards;
-}
 
 - (NSString *)resultOfFlip
 {
@@ -53,43 +47,39 @@
 {
     self.resultOfFlip = @"";
      Card *card = [self cardAtIndex: index];
-    [self.matchedCards removeAllObjects];
+    [self.faceUpCards removeAllObjects];
 
     if (card && !card.isUnplayable) {
-        self.resultOfFlip =[NSString stringWithFormat:@"Flipped down"];        
+        self.resultOfFlip =[NSString stringWithFormat:@"Flipped down"];
         if (!card.isFaceUp) {                                 //------ if 1
          self.resultOfFlip =[NSString stringWithFormat:@"Flipped up %@! %d point minus",card.contents,FLIP_COST];
             
 //----------------------Begin of cicle for self.cards-----------------------------------------
         for (Card *otherCard in self.cards) {
             if (otherCard.isFaceUp && !otherCard.isUnplayable) {  //----- if 2
-                [self.matchedCards addObject:otherCard];
+                [self.faceUpCards addObject:otherCard];
 // ------decision on match ----------
-             if ([self.matchedCards count]>= (self.numberMatchedCards -1)) {
-                 [self.contentsOfMatchedCards removeAllObjects];
-                 [self.contentsOfMatchedCards addObject:card.contents];
-                  for (Card *matchedCard in self.matchedCards) {
-                      [self.contentsOfMatchedCards addObject:matchedCard.contents];
-                  }
-                int matchScore = [card match:self.matchedCards];
+             if ([self.faceUpCards count]== (self.gameLevel -1)) {
+                 int matchScore = [card match:self.faceUpCards];
                 if (matchScore) {
                     card.Unplayable =YES;
                     
-                    for (Card *matchedCard in self.matchedCards) {
-                        matchedCard.Unplayable = YES;
+                    for (Card *faceUpCard in self.faceUpCards) {
+                        faceUpCard.Unplayable = YES;
                                             }
-                    self.score = matchScore*MATCH_BONUS;
-                    [self.matchedCards addObject:card];
-                    self.resultOfFlip =[NSString stringWithFormat:@"Matched %@& for %d points ",[self.contentsOfMatchedCards  componentsJoinedByString:@"&"],MATCH_BONUS];
+                    self.score += matchScore*MATCH_BONUS;
+                    [self.faceUpCards addObject:card];
+                    NSString *matches =[self.faceUpCards componentsJoinedByString:@"&"];
+                    self.resultOfFlip =[NSString stringWithFormat:@"Matched %@ for %d points ",matches,matchScore *MATCH_BONUS];
                     
                 }else {
-                    for (Card *matchedCard in self.matchedCards) {
-                         matchedCard.faceUp = NO;
+                    for (Card *faceUpCard in self.faceUpCards) {
+                         faceUpCard.faceUp = NO;
                     }
-                    [self.matchedCards addObject:card];
+                    [self.faceUpCards addObject:card];
                      self.score -= MISMATCH_PENALTY;
-                    [self.matchedCards addObject:card];
-                    self.resultOfFlip =[NSString stringWithFormat:@"%@ don't match! %d point penalty ",[self.contentsOfMatchedCards componentsJoinedByString:@"&"],MISMATCH_PENALTY];
+                    NSString *matches =[self.faceUpCards componentsJoinedByString:@"&"];
+                    self.resultOfFlip =[NSString stringWithFormat:@"%@ don't match! %d point penalty ",matches,MISMATCH_PENALTY];
                 }
                                break;
              }
@@ -110,7 +100,7 @@
     return (index < [self.cards count]) ? self.cards[index] : nil;
 }
 
-- (id)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck numberMatchedCards:(int) numberCards
+- (id)initWithCardCount:(NSUInteger)count usingDeck:(Deck *)deck andGameLevel:(int)gameLevel
 {
     self = [super init];
     if (self) {
@@ -124,8 +114,8 @@
             }
                         
         }
-        self.numberMatchedCards = numberCards;
-        [self.matchedCards removeAllObjects];
+        self.gameLevel = gameLevel;
+        [self.faceUpCards removeAllObjects];
     }
     return self;
 }
