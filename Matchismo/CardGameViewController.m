@@ -24,6 +24,8 @@
 @property (weak, nonatomic) IBOutlet UISlider *timeSlider;
 @property (nonatomic, strong) NSMutableArray *flipsHistory;
 @property (nonatomic) float sliderValue;
+@property (nonatomic) float sliderMaxValue;
+@property (weak, nonatomic) IBOutlet UILabel *sliderMaxLabel;
 
 
 @end
@@ -57,6 +59,10 @@
     return _flipsHistory;
 }
 
+#define MAX_SLIDER 50.0f
+#define INC_SLIDER 20.0f
+
+
 -(void)updateUI
 {
     UIImage *cardBackImage = [UIImage imageNamed:@"Lotus.jpg"];
@@ -78,7 +84,11 @@
     self.resultOfFlip.text = [NSString stringWithFormat:@"%@", self.game.resultOfFlip];
     
     [self.timeSlider setMinimumValue:0.0f];
-    [self.timeSlider setMaximumValue:50.0f];
+    self.sliderMaxValue += (self.sliderMaxValue>self.flipCount) ? 0.0f : INC_SLIDER;
+    [self.timeSlider setMaximumValue:self.sliderMaxValue];
+    self.sliderMaxLabel.text = [NSString stringWithFormat:@"%d",(int)ceilf(self.sliderMaxValue)];
+
+    
     [self.timeSlider setValue: self.sliderValue animated:YES];
     
 }
@@ -96,6 +106,7 @@
     self.flipCount++;
     [self.flipsHistory addObject:self.game.resultOfFlip];
     self.sliderValue++;
+    self.resultOfFlip.alpha = 1.0;
     [self updateUI];
 
 
@@ -108,6 +119,7 @@
     self.flipCount =0;
     self.flipsHistory = nil;
     self.sliderValue=0;
+    self.sliderMaxValue =MAX_SLIDER;
     [self updateUI];
 }
 - (IBAction)modeChanged:(UISegmentedControl *)sender
@@ -127,6 +139,13 @@
     [self updateUI];
     
 }
+-(float)sliderMaxValue
+{
+    if(!_sliderMaxValue ) _sliderMaxValue =MAX_SLIDER;
+    self.sliderMaxLabel.text = [NSString stringWithFormat:@"%D",(int)ceilf(MAX_SLIDER)];
+    return _sliderMaxValue;
+}
+
 - (IBAction)timeChanged:(UISlider *)sender
 {
     int selectedIndex = (int) sender.value;

@@ -13,17 +13,31 @@
 
 -(int)match:(NSArray *)otherCards
 {
-    int suitScore = [otherCards count] + 1;
-    int rankScore = ([otherCards count] + 1) * 2;
-    for (PlayingCard *otherCard in otherCards) {
-        if (otherCard.rank != self.rank) {
-            rankScore = 0;
+    int score =0;
+    int numMatches = 0;
+    if ([otherCards count] > 0)
+    {
+        for (int i = 0; i < [otherCards count]; i++) {
+            for (int j = i+1; j < [otherCards count]; j++) {
+                
+                PlayingCard *card1 = otherCards[i];
+                PlayingCard *card2 = otherCards[j];
+                
+                // check for the same suit
+                if ([card1.suit isEqualToString:card2.suit]) {
+                    score += 1;
+                    numMatches++;
+                }
+                // check for the same rank
+                if (card1.rank == card2.rank) {
+                    score += 4;
+                    numMatches++;
+                }
+            }
         }
-        if (![otherCard.suit isEqualToString:self.suit]) {
-            suitScore = 0;
-        }
+        if (numMatches < [otherCards count] -1) score = 0;
     }
-    return rankScore + suitScore;
+    return score;
 }
 
 - (NSString *)contents

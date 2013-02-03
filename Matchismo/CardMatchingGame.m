@@ -46,49 +46,48 @@
 - (void)flipCardAtIndex:(NSInteger)index
 {
     self.resultOfFlip = @"";
-     Card *card = [self cardAtIndex: index];
+    Card *card = [self cardAtIndex: index];
     [self.faceUpCards removeAllObjects];
-
+    
     if (card && !card.isUnplayable) {
         self.resultOfFlip =[NSString stringWithFormat:@"Flipped down"];
         if (!card.isFaceUp) {                                 //------ if 1
-         self.resultOfFlip =[NSString stringWithFormat:@"Flipped up %@! %d point minus",card.contents,FLIP_COST];
+            self.resultOfFlip =[NSString stringWithFormat:@"Flipped up %@! %d point minus",card.contents,FLIP_COST];
             
-//----------------------Begin of cicle for self.cards-----------------------------------------
-        for (Card *otherCard in self.cards) {
-            if (otherCard.isFaceUp && !otherCard.isUnplayable) {  //----- if 2
-                [self.faceUpCards addObject:otherCard];
-// ------decision on match ----------
-             if ([self.faceUpCards count]== (self.gameLevel -1)) {
-                 int matchScore = [card match:self.faceUpCards];
-                if (matchScore) {
-                    card.Unplayable =YES;
-                    
-                    for (Card *faceUpCard in self.faceUpCards) {
-                        faceUpCard.Unplayable = YES;
-                                            }
-                    self.score += matchScore*MATCH_BONUS;
-                    [self.faceUpCards addObject:card];
-                    NSString *matches =[self.faceUpCards componentsJoinedByString:@"&"];
-                    self.resultOfFlip =[NSString stringWithFormat:@"Matched %@ for %d points ",matches,matchScore *MATCH_BONUS];
-                    
-                }else {
-                    for (Card *faceUpCard in self.faceUpCards) {
-                         faceUpCard.faceUp = NO;
+            //----------------------Begin of cicle for self.cards-----------------------------------------
+            for (Card *otherCard in self.cards) {
+                if (otherCard.isFaceUp && !otherCard.isUnplayable) {  //----- if 2
+                    [self.faceUpCards addObject:otherCard];
+                    // ------decision on match ----------
+                    if ([self.faceUpCards count]== (self.gameLevel -1)) {
+                        [self.faceUpCards addObject:card];
+                        int matchScore = [card match:self.faceUpCards];
+                        if (matchScore) {
+                            card.Unplayable =YES;
+                            
+                            for (Card *faceUpCard in self.faceUpCards) {
+                                faceUpCard.Unplayable = YES;
+                            }
+                            self.score += matchScore*MATCH_BONUS;
+                            NSString *matches =[self.faceUpCards componentsJoinedByString:@"&"];
+                            self.resultOfFlip =[NSString stringWithFormat:@"Matched %@ for %d points ",matches,matchScore *MATCH_BONUS];
+                            
+                        }else {
+                            for (Card *faceUpCard in self.faceUpCards) {
+                                if (faceUpCard != card) faceUpCard.faceUp = NO;
+                            }
+                            self.score -= MISMATCH_PENALTY;
+                            NSString *matches =[self.faceUpCards componentsJoinedByString:@"&"];
+                            self.resultOfFlip =[NSString stringWithFormat:@"%@ don't match! %d point penalty ",matches,MISMATCH_PENALTY];
+                        }
+                        break;
                     }
-                    [self.faceUpCards addObject:card];
-                     self.score -= MISMATCH_PENALTY;
-                    NSString *matches =[self.faceUpCards componentsJoinedByString:@"&"];
-                    self.resultOfFlip =[NSString stringWithFormat:@"%@ don't match! %d point penalty ",matches,MISMATCH_PENALTY];
-                }
-                               break;
-             }
-// ------decision on match ----------
-            }    //-------- if 2
-        }   //-- for
-//----------------------End of cicle for self.cards-----------------------------------------
+                    // ------decision on match ----------
+                }    //-------- if 2
+            }   //-- for
+            //----------------------End of cicle for self.cards-----------------------------------------
             
-         self.score -= FLIP_COST;
+            self.score -= FLIP_COST;
         }                                        //------- if 1
         card.faceUp = !card.faceUp;
     }
